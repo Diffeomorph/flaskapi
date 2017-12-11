@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 #would normally be stored in a db
-languages =[{'name': 'JS'},{'name':'Python'},{'name','Ruby'}]
+languages =[{'name': 'JS'},{'name':'Python'},{'name':'Ruby'}]
 
 @app.route("/",methods=['GET'])
 def test():
@@ -17,5 +17,13 @@ def returnOne(name):
     langs = [language for language in languages if language['name']==name]
     return jsonify({'language': langs[0]})    
 
+@app.route('/lang', methods=['POST'])
+def addOne():
+    language = {'name': request.json['name']}
+
+    languages.append(language)
+    return jsonify({'languages': languages})
+    
+    
 if __name__ == '__main__':
     app.run(debug=True,port=8080)
